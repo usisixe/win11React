@@ -1,0 +1,22 @@
+name: Windows RDP
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Set up RDP
+        run: |
+          net user runneradmin MyRDPpassword123!
+          echo "✅ Username: runneradmin"
+          echo "✅ Password: MyRDPpassword123!"
+          echo "⏳ Wait 1-2 minutes, then connect via Remote Desktop"
+          echo "⚠️ Session will last about 6 hours"
+
+      - name: Keep alive
+        run: |
+          for /L %%i in (1,1,360) do (
+            echo Still alive %%i
+            timeout /t 60 >nul
+          )
